@@ -1,6 +1,6 @@
 public enum Rank {
   // enumerate card values
-  TWO(2, "2"), 
+  TWO(2, "2"),
   THREE(3, "3"),
   FOUR(4, "4"),
   FIVE(5, "5"),
@@ -29,7 +29,7 @@ public enum Rank {
     return rankValue;
   }
 
-  public int printRankLabel() {
+  public String printRankLabel() {
     return rankLabel;
   }
 }
