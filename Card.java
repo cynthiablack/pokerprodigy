@@ -19,7 +19,7 @@ public class Card {
 
   public String toString() {
     String cardString = "";
-    cardString += rank.printRankLabel() + suit.printSuit();
+    cardString += rank.printRankLabel() + suit.printSuit() + "\n//" + rank.printRankLabel() + " of " + suit.printSuit();
     return cardString;
   }
 
