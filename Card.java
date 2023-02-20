@@ -13,13 +13,17 @@ public class Card {
     return rank.printRankLabel();
   }
 
-  public String getSuit() {
-    return suit.printSuit();
+  public String getSuitSymbol() {
+    return suit.printSuitSymbol();
+  }
+
+  public String getSuitName() {
+    return suit.printSuitName();
   }
 
   public String toString() {
     String cardString = "";
-    cardString += rank.printRankLabel() + suit.printSuit() + "\n//" + rank.printRankLabel() + " of " + suit.printSuit();
+    cardString += "  " + rank.printRankLabel() + " " + suit.printSuitSymbol() + "   (" + rank.printRankLabel() + " of " + suit.printSuitName() + ")";
     return cardString;
   }
 
