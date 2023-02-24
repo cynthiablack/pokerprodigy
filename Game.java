@@ -1,15 +1,15 @@
 public class Game {
-  private Bank bank;
+  private Bank playerBank;
 
-  public static void main(String[] args) {
-    // create player bank with initial balance
-    Bank playerBank = new Bank(5);
+  public Game(int initialBalance) {
+    playerBank = new Bank(initialBalance);
     System.out.println("Current balance is " + playerBank.getBalance() + " credits.");
+  }
 
-      // create deck
-      Deck gameDeck = new Deck();
-      gameDeck.populate();
-      System.out.println("Deck has following cards: " + gameDeck.showHand());
+  public void play() {
+    // create deck
+    Deck gameDeck = new Deck();
+    gameDeck.populate();
 
     // shuffle deck
     gameDeck.shuffle();
@@ -22,9 +22,17 @@ public class Game {
       gameDeck.dealCard(playerHand);
     }
 
-    // Print playerHand
     System.out.println("Your hand is " + playerHand.showHand());
-    
+  }
 
+  public void bet(int amount) {
+      playerBank.subtractCredits(amount);
+      System.out.println("Betting " + amount + " credit(s). Your bank balance is now " + playerBank.getBalance() + " credits.");
+    }
+
+  public static void main(String[] args) {
+    Game game = new Game(5);
+    game.bet(1);
+    game.play();
   }
 }
