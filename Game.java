@@ -13,7 +13,18 @@ public class Game {
 
     // shuffle deck
     gameDeck.shuffle();
-    System.out.println("Deck has been shuffled and has the following cards: " + gameDeck.showHand());
+
+    // create initial hand
+    Hand playerHand = new Hand();
+
+    // deal cards until player hand has 5 cards
+    while (playerHand.getCards().size() < 5) {
+      gameDeck.dealCard(playerHand);
+    }
+
+    // Print playerHand
+    System.out.println("Your hand is " + playerHand.showHand());
+    
 
   }
 }
