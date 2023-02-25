@@ -49,6 +49,11 @@ public class Game {
     if (success) {
       System.out.println("You discarded " + card);
       System.out.println("Your new hand is: ");
+
+      while (playerHand.getCards().size() < 5) {
+        gameDeck.dealCard(playerHand);
+      }
+      
       System.out.println(playerHand.showHand());
       System.out.println("Cards in discard pile: ");
       System.out.println(discardHand.showHand());
