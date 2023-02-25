@@ -17,12 +17,15 @@ public class Game {
     // create initial hand
     Hand playerHand = new Hand();
 
-    // deal cards until player hand has 5 cards
+    // deal cards until playerHand has 5 cards
     while (playerHand.getCards().size() < 5) {
       gameDeck.dealCard(playerHand);
     }
 
-    System.out.println("Your hand is " + playerHand.showHand());
+    System.out.println("Your hand is: ");
+    for (int i = 0; i < playerHand.getCards().size(); i++) {
+      System.out.println((i + 1) + ": " + playerHand.getCards().get(i).toString());
+    }
   }
 
   public void bet(int amount) {
