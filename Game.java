@@ -32,38 +32,50 @@ public class Game {
   Scanner input = new Scanner(System.in);
 
   // discard a card
-  System.out.println("Enter the numbers of the cards you want to discard:");
-  int index = input.nextInt();
+  System.out.println("Enter the numbers of the cards you want to discard (separated by spaces) or enter 0 to hold all cards in your current hand:");
+  String indicesString = input.nextLine();
+  String[] indicesArray = indicesString.split("\\s+");
+  int[] indices = new int[indicesArray.length];
 
-  if (index == 0) {
-    System.out.println("Evaluating hand.");
+  for (int i = 0; i < indicesArray.length; i++) {
+    indices[i] = Integer.parseInt(indicesArray[i]);
   }
-  else if (index < 1 || index > playerHand.getCards().size()) {
-    System.out.println("Invalid index!");
-  }
-  else {
-    Card card = playerHand.getCards().get(index - 1);
-    Hand discardHand = new Hand();
-    boolean success = playerHand.discard(card, discardHand);
 
-    if (success) {
-      System.out.println("You discarded " + card);
-      System.out.println("Your new hand is: ");
+  Arrays.sort(indices);
+  Hand discardHand = new Hand();
 
-      while (playerHand.getCards().size() < 5) {
-        gameDeck.dealCard(playerHand);
-      }
-      
-      System.out.println(playerHand.showHand());
-      System.out.println("Cards in discard pile: ");
-      System.out.println(discardHand.showHand());
+  for (int i = indices.length - 1; i >= 0; i--) {
+    int index = indices[i];
+    if (index == 0) {
+      System.out.println("Evaluating hand.");
+    }
+    else if (index < 1 || index > playerHand.getCards().size()) {
+      System.out.println("Invalid index.");
     }
     else {
-      System.out.println("Could not discard selected card!");
+      Card card = playerHand.getCards().get(index - 1);
+      boolean success = playerHand.discard(card, discardHand);
+
+      if (success) {
+        System.out.println("You discarded " + card);
+      }
+      else {
+        System.out.println("Could not discard selected card!");
+      }
     }
   }
+
+  // replace discards in playerHand
+  while (playerHand.getCards().size() < 5) {
+    gameDeck.dealCard(playerHand);
+  }
+
+  System.out.println("Your hand is: ");
+  System.out.println(playerHand.showHand());
+  System.out.println("Cards in discard pile: ");//
+  System.out.println(discardHand.showHand());//
 }
-  
+
   public void bet(int amount) {
       playerBank.subtractCredits(amount);
       System.out.println("Betting " + amount + " credit(s). Your bank balance is now " + playerBank.getBalance() + " credits.");
