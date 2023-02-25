@@ -6,7 +6,7 @@ public class Game {
 
   public Game(int initialBalance) {
     playerBank = new Bank(initialBalance);
-    System.out.println("Current balance is " + playerBank.getBalance() + " credits.");
+    System.out.println("You have " + playerBank.getBalance() + " credit(s).");
   }
 
   public void play() {
@@ -76,14 +76,19 @@ public class Game {
   System.out.println(discardHand.showHand());//
 }
 
-  public void bet(int amount) {
+  public void bet(int amount, Scanner input) {
       playerBank.subtractCredits(amount);
-      System.out.println("Betting " + amount + " credit(s). Your bank balance is now " + playerBank.getBalance() + " credits.");
+      System.out.println("Betting " + amount + " credit(s).");
     }
 
   public static void main(String[] args) {
     Game game = new Game(5);
-    game.bet(1);
+      
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter a bet of 1 or more credits to start the game: ");
+    int betAmount = scanner.nextInt();
+    
+    game.bet(betAmount, scanner);
     game.play();
   }
 }
