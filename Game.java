@@ -32,7 +32,7 @@ public class Game {
   Scanner input = new Scanner(System.in);
 
   // discard a card
-  System.out.println("Enter the numbers of the cards you want to discard (separated by spaces) or enter 0 to hold all cards in your current hand:");
+  System.out.println("Enter the numbers of the cards you want to discard (separated by spaces), enter -1 to discard all cards, or enter 0 to hold all cards in your current hand:");
   String indicesString = input.nextLine();
   String[] indicesArray = indicesString.split("\\s+");
   int[] indices = new int[indicesArray.length];
@@ -89,10 +89,16 @@ public class Game {
     Game game = new Game(5);
       
     Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter a bet of 1 or more credits to start the game: ");
-    int betAmount = scanner.nextInt();
     
-    game.bet(betAmount, scanner);
-    game.play();
+    int betAmount = 0;
+    do {
+      System.out.print("Enter a bet of 1 or more credits to start the game or type 0 to exit.");
+      betAmount = scanner.nextInt();
+      if (betAmount > 0) {
+        game.bet(betAmount, scanner);
+        game.play();
+      }
+    }
+    while (betAmount !=0);
   }
 }
