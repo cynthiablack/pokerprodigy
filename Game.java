@@ -43,11 +43,14 @@ public class Game {
 
   Arrays.sort(indices);
   Hand discardHand = new Hand();
+  EvaluateHand evaluator = new EvaluateHand();
 
   for (int i = indices.length - 1; i >= 0; i--) {
     int index = indices[i];
     if (index == 0) {
       System.out.println("Evaluating hand.");
+      String handResult = evaluator.evaluateHand(playerHand.getCards().toArray(new Card[playerHand.getCards().size()]));
+      System.out.println("Your hand is a " + handResult + ".");
     }
     else if (index < 1 || index > playerHand.getCards().size()) {
       System.out.println("Invalid index.");
@@ -72,8 +75,9 @@ public class Game {
 
   System.out.println("Your hand is: ");
   System.out.println(playerHand.showHand());
-  System.out.println("Cards in discard pile: ");//
-  System.out.println(discardHand.showHand());//
+  System.out.println("Evaluating hand.");
+      String handResult = evaluator.evaluateHand(playerHand.getCards().toArray(new Card[playerHand.getCards().size()]));
+      System.out.println("Your hand is a " + handResult + ".");
 }
 
   public void bet(int amount, Scanner input) {
