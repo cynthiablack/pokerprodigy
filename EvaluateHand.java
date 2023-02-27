@@ -4,9 +4,99 @@ import java.util.Comparator;
 public class EvaluateHand {
   public static String evaluateHand(Card[] hand) {
     // sort the cards by both rank and suit
-    Arrays.sort(hand, Comparator.comparing((Card c) -> c.getSuitName()).thenComparingInt((Card c) -> c.getRank().getRankValue()));
+    Arrays.sort(hand, Comparator.comparing((Card c) -> c.getSuit()).thenComparingInt((Card c) -> c.getRank().getRankValue()));
 
-    // check for ace & king
+    // count frequency of each rank
+    int aceCount = 0;
+    int twoCount = 0;
+    int threeCount = 0;
+    int fourCount = 0;
+    int fiveCount = 0;
+    int sixCount = 0;
+    int sevenCount = 0;
+    int eightCount = 0;
+    int nineCount = 0;
+    int tenCount = 0;
+    int jackCount = 0;
+    int queenCount = 0;
+    int kingCount = 0;
+
+    // count the instances of each rank
+    Rank currentRank = hand[0].getRank();
+    for (int i = 1; i < hand.length; i++) {
+      if (hand[i].getRank() == Rank.ACE) {
+        aceCount++;
+      } 
+      else if (hand[i].getRank() == Rank.TWO) {
+        twoCount++;
+      } 
+      else if (hand[i].getRank() == Rank.THREE) {
+        threeCount++;
+      } 
+      else if (hand[i].getRank() == Rank.FOUR) {
+        fourCount++;
+      } 
+      else if (hand[i].getRank() == Rank.FIVE) {
+        fiveCount++;
+      } 
+      else if (hand[i].getRank() == Rank.SIX) {
+        sixCount++;
+      }
+      else if (hand[i].getRank() == Rank.SEVEN) {
+        sevenCount++;
+      } 
+      else if (hand[i].getRank() == Rank.EIGHT) {
+        eightCount++;
+      } 
+      else if (hand[i].getRank() == Rank.NINE) {
+        nineCount++;
+      } 
+      else if (hand[i].getRank() == Rank.TEN) {
+        tenCount++;
+      } 
+      else if (hand[i].getRank() == Rank.JACK) {
+        jackCount++;
+      } 
+      else if (hand[i].getRank() == Rank.QUEEN) {
+        queenCount++;
+      }
+      else if (hand[i].getRank() == Rank.KING) {
+        kingCount++;
+      }
+    }
+    
+    // accumulators for each suit
+    int clubsCount = 0;
+    int diamondsCount = 0;
+    int heartsCount = 0;
+    int spadesCount = 0;
+    
+    // count the instances of each suit
+    Suit currentSuit = hand[0].getSuit();
+    for (int i = 1; i < hand.length; i++) {
+      if (hand[i].getSuit() == Suit.CLUBS) {
+        clubsCount++;
+      } 
+      else if (hand[i].getSuit() == Suit.DIAMONDS) {
+        diamondsCount++;
+      } 
+      else if (hand[i].getSuit() == Suit.HEARTS) {
+        heartsCount++;
+      }
+      else if (hand[i].getSuit() == Suit.SPADES) {
+        spadesCount++;
+      }
+    }
+    
+    // check for same suit
+    boolean sameSuit = false;
+    if (clubsCount == 5 || 
+        diamondsCount == 5 || 
+        heartsCount == 5 || 
+        spadesCount == 5) {
+      sameSuit = true;
+    }
+    
     boolean hasAce = hand[0].getRank().equals(Rank.ACE);
     boolean hasKing = hand[4].getRank().equals(Rank.KING);
     
@@ -15,15 +105,15 @@ public class EvaluateHand {
       hand[0].setRankValue(14);
     }
 
-    // check for same suit
-    boolean sameSuit = true;
-    Suit suit = hand[0].getSuit();
-    for (int i = 1; i < hand.length; i++) {
-      if (!hand[i].getSuitName().equals(suit)) {
-        sameSuit = false;
-        break;
-      }
-    }
+    // check for royal flush
+    if (sameSuit &&
+        hand[0].getRank() == Rank.ACE &&
+        hand[1].getRank() == Rank.TEN &&
+        hand[2].getRank() == Rank.JACK &&
+        hand[3].getRank() == Rank.QUEEN &&
+        hand[4].getRank() == Rank.KING) {
+          return "Royal Flush";
+        }
 
     // check for straight
     boolean straight = true;
@@ -33,16 +123,6 @@ public class EvaluateHand {
         break;
       }
     }
-    
-    // check for royal flush
-    if (sameSuit && straight &&
-        hand[0].getRank() == Rank.ACE &&
-        hand[1].getRank() == Rank.TEN &&
-        hand[2].getRank() == Rank.JACK &&
-        hand[3].getRank() == Rank.QUEEN &&
-        hand[4].getRank() == Rank.KING) {
-          return "Royal Flush";
-        }
 
     // check for straight flush
     if (sameSuit && straight) {
@@ -58,19 +138,65 @@ public class EvaluateHand {
     if (straight) {
       return "Straight";
     }
+      
+    // check for four of a kind
+    if (aceCount == 4 || 
+        twoCount == 4 || 
+        threeCount == 4 || 
+        fourCount == 4 || 
+        fiveCount == 4 || 
+        sixCount == 4 || 
+        sevenCount == 4 || 
+        eightCount == 4 || 
+        nineCount == 4 || 
+        tenCount == 4 || 
+        jackCount == 4 || 
+        queenCount == 4 || 
+        kingCount == 4) {
+          return "Four of a Kind";
+        }
 
-    // check for 4 of a kind
-    if (hand[0].getRank() == hand[3].getRank() || hand[1].getRank() == hand[4].getRank()) {
-      return "Four of a Kind";
-    }
+    boolean threeOfAKind = false;
+    boolean pair = false;
+    
+    if (aceCount == 3 || 
+        twoCount == 3 || 
+        threeCount == 3 || 
+        fourCount == 3 || 
+        fiveCount == 3 || 
+        sixCount == 3 || 
+        sevenCount == 3 || 
+        eightCount == 3 || 
+        nineCount == 3 || 
+        tenCount == 3 || 
+        jackCount == 3 || 
+        queenCount == 3 || 
+        kingCount == 3) {
+          threeOfAKind = true;
+        }
+
+        if (aceCount == 2 || 
+        twoCount == 2 || 
+        threeCount == 2 || 
+        fourCount == 2 || 
+        fiveCount == 2 || 
+        sixCount == 2 || 
+        sevenCount == 2 || 
+        eightCount == 2 || 
+        nineCount == 2 || 
+        tenCount == 2 || 
+        jackCount == 2 || 
+        queenCount == 2 || 
+        kingCount == 2) {
+          pair = true;
+        }
 
     // check for full house
-    if ((hand[0].getRank() == hand[1].getRank() && hand[2].getRank() == hand[4].getRank()) || (hand[0].getRank() == hand[2].getRank() && hand[3].getRank() == hand[4].getRank())) {
+    if (threeOfAKind && pair) {
       return "Full House";
     }
-
-    // check for 3 of a kind
-    if (hand[0].getRank() == hand[2].getRank() || hand[1].getRank() == hand[3].getRank() || hand[2].getRank() == hand[4].getRank()) {
+    // check for three of a kind
+    if (threeOfAKind) {
       return "Three of a Kind";
     }
 
@@ -86,24 +212,10 @@ public class EvaluateHand {
       return "Two Pair";
     }
 
-    pairCount = 1;
-    Rank currentRank = hand[0].getRank();
-    for (int i = 1; i < hand.length; i++) {
-      if (hand[i].getRank() == currentRank) {
-        pairCount++;
-      } else {
-        if (pairCount >= 2 && (currentRank == Rank.JACK || currentRank == Rank.QUEEN || currentRank == Rank.KING || currentRank == Rank.ACE)) {
-          return "Jacks or Better";
-        }
-        currentRank = hand[i].getRank();
-        pairCount = 1;
-      }
-    }
-    if (pairCount >= 2 && (currentRank == Rank.JACK || currentRank == Rank.QUEEN || currentRank == Rank.KING || currentRank == Rank.ACE)) {
-      return "Jacks or Better";
-    }
-
-
+  // check for jacks or better
+  if (jackCount > 1 || queenCount > 1 || kingCount > 1 || kingCount > 1) {
+    return "Jacks or Better";
+  }
     
   return "not a winner";
   }
