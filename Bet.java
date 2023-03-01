@@ -8,6 +8,11 @@ public class Bet {
     return betAmount;
   }
 
+  public void setBetAmount(int betAmount) {
+    this.betAmount = betAmount;
+  }
+
+
   public int bet(Scanner input, Bank playerBank) {
     // Scanner scanner = new Scanner(System.in);
     while (true) {

@@ -1,6 +1,7 @@
 public class PayTable {
-  public static int getPayout(String handResult, int betAmount) {
+  public static int getPayout(String handResult, Bet bet) {
   int payout = 0;
+  int betAmount = bet.getBetAmount();
 
   switch (handResult) {
     case "Royal Flush":

@@ -9,8 +9,7 @@ public class Game {
 
   public Game(int initialBalance) {
     Game.playerBank = new Bank(initialBalance);
-    Game.bet = new Bet();
-
+    this.bet = new Bet();
     System.out.println("You have " + playerBank.getBalance() + " credit(s).");
   }
 
@@ -100,7 +99,7 @@ public class Game {
       System.out.println("Evaluating hand.");
       String handResult = evaluator.evaluateHand(heldHand.getCards().toArray(new Card[heldHand.getCards().size()]));
       System.out.println("Your hand is " + handResult + ".");
-      int payout = PayTable.getPayout(handResult, betAmount);
+      int payout = PayTable.getPayout(handResult, bet);
       System.out.println("You won " + payout + " credits.");
       playerBank.addCredits(payout);
       System.out.println("\n" + "You have " + playerBank.getBalance() + " credits.");
@@ -119,8 +118,7 @@ public class Game {
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-    Game game = new Game(5);
-
+    Game game = new Game(20);
     int betAmount;
 
     do {
