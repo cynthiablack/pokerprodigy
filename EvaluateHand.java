@@ -73,7 +73,7 @@ public class EvaluateHand {
     
     // count the instances of each suit
     Suit currentSuit = hand[0].getSuit();
-    for (int i = 1; i < hand.length; i++) {
+    for (int i = 0; i < hand.length; i++) {
       if (hand[i].getSuit() == Suit.CLUBS) {
         clubsCount++;
       } 
@@ -161,11 +161,6 @@ for (int i = 0; i < hand.length - 4; i++) {
     if (sameSuit) {
       boolean hasAce = hand[0].getRank().equals(Rank.ACE);
       boolean hasKing = hand[4].getRank().equals(Rank.KING);
-    
-      // treat Ace as high if hand has both Ace & King
-      if (hasAce && hasKing) {
-        hand[0].setRankValue(14);
-      }
 
       // check for royal flush
       if (hand[0].getRank() == Rank.ACE &&
